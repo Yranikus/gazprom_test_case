@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: currency-rate-config
+data:
+  SPRING_PROFILES_ACTIVE: prod
+  JAVA_TOOL_OPTIONS: -XX:+UseContainerSupport -XX:MaxRAMPercentage=80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test
+spec:
+  selector:
+    matchLabels:
+      app: test
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: test
+    spec:
+      containers:
+        - name: test
+          image: registry.hub.docker.com/yran38/gazprom_test_case:latest
+          ports:
+            - containerPort: 8081
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test
+spec:
+  selector:
+    app: test
+  ports:
+    - protocol: "TCP"
+      port: 80
+      targetPort: 8081
+  type: LoadBalancer
+
