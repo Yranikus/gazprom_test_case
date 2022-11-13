@@ -1,5 +1,4 @@
-# gazprom_test_case
-Тествое задание 
+# gazprom_test_case 
 
 Данные от авторизации:
 login: user
