@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 
 
+
+
 //Информацию о формате адресса профиля и группы я взял с офф документации вк https://vk.com/faq18038
 class ValidationServiceTest {
 

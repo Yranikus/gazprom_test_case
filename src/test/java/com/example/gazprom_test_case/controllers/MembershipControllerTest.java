@@ -1,6 +1,5 @@
 package com.example.gazprom_test_case.controllers;
 
-import com.example.gazprom_test_case.configuration.auth.TestSecurityConfig;
 import com.example.gazprom_test_case.entities.RequestEntity;
 import com.example.gazprom_test_case.entities.ResponceToClientEntity;
 import com.example.gazprom_test_case.entities.vkerrors.ErrorEntity;
@@ -11,11 +10,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.*;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+
+
+@TestConfiguration
+@Order(1)
+class TestSecurityConfig extends WebSecurityConfigurerAdapter {
+
+
+    @Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.csrf().disable()
+                .authorizeRequests().anyRequest().permitAll();
+    }
+
+}
+
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT,classes = TestSecurityConfig.class)
 @TestPropertySource("/application-test.properties")
